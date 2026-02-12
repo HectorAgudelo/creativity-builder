@@ -1,0 +1,10 @@
+# Ignore the "Kitchen Trash"
+node_modules/
+dist/
+.DS_Store
+
+# Ignore the compiled JavaScript (since we only care about the TypeScript source)
+*.js
+
+# Ignore the TypeScript build info
+*.tsbuildinfo
