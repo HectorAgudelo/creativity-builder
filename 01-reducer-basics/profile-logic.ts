@@ -1,11 +1,14 @@
 interface TeamState {
-    teamsName: string;
+    teamsName: {
+        id: string;
+        name: string;
+    };
     playerCount: number;
     isWhitelisted: boolean;
 }
 
 type TeamAction =
-    | { type: "SET_TEAM"; payload: string }
+    | { type: "SET_TEAM"; payload: { id: string; name: string; }}
     | { type: "ADD_PLAYER"; payload: number }
     | { type: "TOGGLE_WHITELIST" }
     | { type: "RESET_TEAM" };
@@ -16,7 +19,10 @@ function teamReducer(state: TeamState, action: TeamAction) : TeamState {
         case 'SET_TEAM':
             return {
                 ...state,
-                teamsName: action.payload
+                teamsName: {
+                    ...state.teamsName,
+                    name: action.payload.name
+                }
             };
    
         case 'ADD_PLAYER':
@@ -32,7 +38,7 @@ function teamReducer(state: TeamState, action: TeamAction) : TeamState {
         case 'RESET_TEAM':
             return{
                 ...state,
-                teamsName: '',
+                teamsName: { ...state.teamsName, name: '' },
                 playerCount: 0
             }
     default:
