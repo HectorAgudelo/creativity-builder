@@ -11,6 +11,7 @@ type TeamAction =
     | { type: "SET_TEAM"; payload: { id: string; name: string; }}
     | { type: "ADD_PLAYER"; payload: number }
     | { type: "TOGGLE_WHITELIST" }
+    | { type: "UPDATE_TEAM_DETAILS"; payload: {id: string, name: string } }
     | { type: "RESET_TEAM" };
 
 
@@ -24,7 +25,6 @@ function teamReducer(state: TeamState, action: TeamAction) : TeamState {
                     name: action.payload.name
                 }
             };
-   
         case 'ADD_PLAYER':
             return {
                 ...state,
@@ -34,6 +34,14 @@ function teamReducer(state: TeamState, action: TeamAction) : TeamState {
             return {
                 ...state,
                 isWhitelisted: !state.isWhitelisted
+            };
+        case 'UPDATE_TEAM_DETAILS':
+            return {
+                ...state,
+                teamsName: {
+                    id: action.payload.id,
+                    name: action.payload.name
+                },
             };
         case 'RESET_TEAM':
             return{
