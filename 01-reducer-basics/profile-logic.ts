@@ -39,6 +39,7 @@ function teamReducer(state: TeamState, action: TeamAction) : TeamState {
             return {
                 ...state,
                 teamsName: {
+                    ...state.teamsName,
                     id: action.payload.id,
                     name: action.payload.name
                 },
