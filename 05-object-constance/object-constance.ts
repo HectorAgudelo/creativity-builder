@@ -11,4 +11,4 @@ const GAME_SETTINGS: Record<Difficulty, Settings> = {
   Easy: { spawnRate: 5, bossHealth: 100 },
   Medium: { spawnRate: 10, bossHealth: 200 },
   Hard: { spawnRate: 15, bossHealth: 300 },
-};
+} as const;
