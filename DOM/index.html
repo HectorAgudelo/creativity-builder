@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript DOM Manipulation</title>
+</head>
+<body>
+  <!-- Visual layout for reference -->
+  <ul id="user-list">
+    <li>
+      <span>Alex_99</span>
+      <button class="delete-btn">Delete</button>
+    </li>
+  </ul>
+
+  <!-- Link your compiled TypeScript (JavaScript) file here -->
+  <script>
+    const findRowAndUsername = (buttonElement) => {
+        const row = buttonElement.closest('li'); // Find the closest <li> ancestor
+        if (!row) return null; // If no row is found, return null
+        const nameElement = row.querySelector('span');
+        return nameElement ? nameElement.textContent : null;
+    };
+
+    document.addEventListener('click', (event) => {
+        if(event.target.classList.contains('delete-btn')) {
+            const username = findRowAndUsername(event.target);
+            console.log(`Deleting user: ${username}`);
+            // Here you can add code to actually delete the user from the DOM or perform other actions
+        }
+    })
+  </script>
+</body>
+</html>
