@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<ul id="user-list">
+  <li data-id="101"><span>Alex_99</span><button class="delete-btn">Delete</button></li>
+  <li data-id="102"><span>Sam_Pro</span><button class="delete-btn">Delete</button></li>
+  <li data-id="103"><span>Chris_Dev</span><button class="delete-btn">Delete</button></li>
+</ul>
+<script>
+  const scraper = () => {
+const rowElement = document.querySelectorAll('#user-list li');
+return Array.from(rowElement).map(row => {
+    const id = row.dataset.id;
+    const userName = row.querySelector('span');
+    const user = userName? userName.textContent : 'unknown';
+    return {id, user};
+});
+}
+console.log(scraper());  
+</script>
+</body>
+</html>
