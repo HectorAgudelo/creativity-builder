@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> [!IMPORTANT]
+> When collaborating on the JavaScript 30 exercises, you **MUST** read and follow the **[AGENT.md](file:///home/hectordesk/.gemini/antigravity/worktrees/typeScript/project-documentation-overview/AGENT.md)** guidelines. They detail the preferred step-by-step pair programming workflow, vanilla JavaScript constraints, and learning objectives.
+
 ## Commands
 
 Run a TypeScript file directly (no build step needed):
