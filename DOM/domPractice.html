@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="slot-list">
+    <li class="slot-item"><button class="slot-btn">09:00</button></li>
+    <li class="slot-item"><button class="slot-btn">09:30</button></li>
+    <li class="slot-item"><button class="slot-btn">10:00</button></li>
+</ul>
+
+<script>
+    const slotList = document.querySelector('#slot-list');
+    
+    slotList.addEventListener('click', (event) => {
+        if(event.target.classList.contains('slot-btn')){
+            console.log(`You clicked on ${event.target.textContent}`);  
+            createLoadingModal(event.target.textContent);
+        }
+    });
+    const createLoadingModal = (time) => {       
+        const containerExist = document.querySelector('#event-modal');
+        if(containerExist) containerExist.remove();
+        const container = document.createElement('div');
+        container.setAttribute('id', 'event-modal');
+        container.textContent = `Loading Event Details...${time}`;
+
+        document.body.appendChild(container);
+    }
+
+</script>
+</body>
+</html>
