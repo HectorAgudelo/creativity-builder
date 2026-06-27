@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla JS Architecture - Event Widget</title>
+</head>
+<body>
+    <ul id="slot-list">
+        <li class="slot-item"><button class="slot-btn">09:00</button></li>
+        <li class="slot-item"><button class="slot-btn">09:30</button></li>
+        <li class="slot-item"><button class="slot-btn">10:00</button></li>
+    </ul>
+
+    <script>
+        // MODULE 2: The Consequence (DOM Injection)
+        // Defined first so it is loaded in memory before the event listener calls it.
+        const createLoadingModal = (time) => {       
+            // Guard Clause: Prevent State Collision
+            const containerExist = document.querySelector('#event-modal');
+            if (containerExist) containerExist.remove();
+            
+            // DOM Construction
+            const container = document.createElement('div');
+            container.setAttribute('id', 'event-modal');
+            container.textContent = `Loading Event Details for ${time}...`;
+
+            document.body.appendChild(container);
+        };
+
+        // MODULE 1: The Trigger (Event Delegation)
+        const slotList = document.querySelector('#slot-list');
+        
+        slotList.addEventListener('click', (event) => {
+            if (event.target.classList.contains('slot-btn')) {
+                // Bridge the scope: Pass the clicked text into the consequence module
+                const time = event.target.textContent;
+                createLoadingModal(time);
+                fetchEventData(time);
+            }
+        });
+
+        async function fetchEventData(time) {
+            const data = {
+  eventId: "evt_88472",
+  status: 400,
+  data: {
+    title: "Architecture Review",
+    host: "TARS",
+    durationMinutes: 45,
+    selectedTime: time
+  
+}}
+            setTimeout(() => {
+                const popUp = document.querySelector('#event-modal');
+                if (popUp) {
+                    popUp.textContent = `Event Details Loaded: ${data.data.title} hosted by ${data.data.host} for ${data.data.durationMinutes} minutes at ${data.data.selectedTime}.`;
+                } else {
+                    console.error(`Pop-up container not found. status: ${data.status}, eventId: ${data.eventId}`);
+                }
+            }, 2000);
+        }
+        
+    </script>
+</body>
+</html>

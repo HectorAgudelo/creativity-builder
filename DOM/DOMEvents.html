@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>DOM Events</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <ul id="slot-list">
+            <li class="slot-item"><button class="slot-btn">09:00</button></li>
+            <li class="slot-item"><button class="slot-btn">09:30</button></li>
+            <li class="slot-item"><button class="slot-btn">10:00</button></li>
+        </ul>
+        <script>
+const slotList = document.querySelector('#slot-list');
+slotList.addEventListener('click',(event) => {
+    if(event.target.classList.contains('slot-btn')) {
+        const selectedTime = event.target.textContent;
+        console.log(`You selected the time slot: ${selectedTime}`);
+    }
+});
+        </script>
+    </body>
+</html>
