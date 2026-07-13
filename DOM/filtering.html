@@ -6,19 +6,54 @@
     <title>Athlete filtering</title>
 </head>
 <body>
-    <h1>Athlete Filtering</h1>
-    <label for="athleteSelect">Choose an athlete:</label>
+    <div>
+        <label for="sportSelect">Choose a sport:</label>
+        <select id="sportFilter" disabled>
+            <option value="Soccer">Soccer</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Tennis">Tennis</option>
+        </select>
+        <ul id="athleteList"></ul>
+    </div>
     <!-- render the list of total players that would change based on the selected sport. -->
      <!-- selector for the sport -->
     <script>
-    const athletes = [
-        { "name": "Sarah Jenkins", "sport": "Soccer" },
-        { "name": "Marcus Thorne", "sport": "Basketball" },
-        { "name": "David Kim", "sport": "Tennis" }
-    ];
-       //i should have an array holding the athletes 
-       // a function that would filter the selected sport and generate an array with the athletes belonging to that sport.
+    const SportsModule = (function() {
+        const athletes = [
+            { "name": "Sarah Jenkins", "sport": "Soccer" },
+            { "name": "Marcus Thorne", "sport": "Basketball" },
+            { "name": "David Kim", "sport": "Tennis" }
+        ];
 
+            
+        function getAthletesBySport(sport) {
+            const filteredAthletes = athletes.filter(athlete => athlete.sport === sport);
+            return filteredAthletes;
+        }
+
+        function render(athletes) {
+            const athleteList = document.getElementById('athleteList');
+            athleteList.innerHTML = ''; // Clear the list before rendering new items
+            athletes.forEach(athlete => {
+                const li = document.createElement('li');
+                li.textContent = athlete.name;
+                athleteList.appendChild(li);
+            });
+        }
+        return {getAthletesBySport, render};
+    })();
+
+    try {
+        const sportFilter = document.querySelector('#sportFilter');
+        SportsModule.render(SportsModule.getAthletesBySport(sportFilter.value));
+        sportFilter.addEventListener('change', () => {
+            const selectedSport = sportFilter.value;
+            const filteredAthletes = SportsModule.getAthletesBySport(selectedSport);
+            SportsModule.render(filteredAthletes);
+        });
+    } catch (error) {
+        console.error('Error occurred:', error);
+    }
     
     </script>
 </body>
