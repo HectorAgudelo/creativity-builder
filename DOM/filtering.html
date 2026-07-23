@@ -3,57 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Athlete filtering</title>
+    <title>Floating Button</title>
+    <style>
+        .floating-btn {
+            z-index: 10;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 4px 10px rgba(85, 34, 34, 0.3);
+            border: none;
+            background-color: white;
+            font-size: 24px;
+            cursor: pointer;
+            /* Add a transition for a smooth effect */
+            transition: all 0.2s ease-in-out;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background-color: #f1f1f1;
+        }
+
+        .floating-btn-text {
+            display: inline-block;
+            line-height: 60px; /* Center the text vertically */
+            text-align: center;
+            width: 100%;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .floating-btn-text.open {
+            transform: rotate(90deg);
+        }
+    
+        .drawer-container {
+            
+            position: fixed;
+            width:auto;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .drawer-container {
+            transform: translateY(100%);
+            transition: all 0.2s ease-in-out;
+        }
+        .drawer-container.open{
+            transform: translateY(0);
+        }
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <label for="sportSelect">Choose a sport:</label>
-        <select id="sportFilter" disabled>
-            <option value="Soccer">Soccer</option>
-            <option value="Basketball">Basketball</option>
-            <option value="Tennis">Tennis</option>
-        </select>
-        <ul id="athleteList"></ul>
+    <div class="container">
+         <div>
+        <h1>Floating Button Example</h1>
+        <p>Click the floating button to toggle the action menu.</p>
     </div>
-    <!-- render the list of total players that would change based on the selected sport. -->
-     <!-- selector for the sport -->
+    <div>
+        <button class="floating-btn"><span class="floating-btn-text">X</span></button>
+    </div>
+    </div>
+   
+  
     <script>
-    const SportsModule = (function() {
-        const athletes = [
-            { "name": "Sarah Jenkins", "sport": "Soccer" },
-            { "name": "Marcus Thorne", "sport": "Basketball" },
-            { "name": "David Kim", "sport": "Tennis" }
-        ];
+        const data = {
+            "drawerContent": {
+                "title": "Action Menu",
+                "items": ["Archive", "Delete", "Share", "Star"]
+            }
+        };
 
-            
-        function getAthletesBySport(sport) {
-            const filteredAthletes = athletes.filter(athlete => athlete.sport === sport);
-            return filteredAthletes;
-        }
+        const floatingBtn = document.querySelector('.floating-btn');
+        const floatingBtnText = document.querySelector('.floating-btn-text');
+        
+        const drawer = ActionDrawer(data);
 
-        function render(athletes) {
-            const athleteList = document.getElementById('athleteList');
-            athleteList.innerHTML = ''; // Clear the list before rendering new items
-            athletes.forEach(athlete => {
-                const li = document.createElement('li');
-                li.textContent = athlete.name;
-                athleteList.appendChild(li);
-            });
-        }
-        return {getAthletesBySport, render};
-    })();
-
-    try {
-        const sportFilter = document.querySelector('#sportFilter');
-        SportsModule.render(SportsModule.getAthletesBySport(sportFilter.value));
-        sportFilter.addEventListener('change', () => {
-            const selectedSport = sportFilter.value;
-            const filteredAthletes = SportsModule.getAthletesBySport(selectedSport);
-            SportsModule.render(filteredAthletes);
+        floatingBtn.addEventListener('click', () => {
+            if (drawer.element.classList.contains('open')&& floatingBtnText.classList.contains('open')) {
+                drawer.close();
+                floatingBtnText.classList.remove('open');
+            } else {
+                drawer.open();
+                floatingBtnText.classList.add('open');
+            }
         });
-    } catch (error) {
-        console.error('Error occurred:', error);
-    }
+
+        document.body.appendChild(drawer.element);
+
+        function ActionDrawer(data) {
+        const drawerContainer = document.createElement('div');
+        drawerContainer.classList.add('drawer-container');
+        const drawerContent = data.drawerContent;
+        const title = document.createElement('h3');
+        title.textContent = drawerContent.title;
+        drawerContainer.appendChild(title);
+
+        const itemList = document.createElement('ul');
+        drawerContent.items.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = item;
+            itemList.appendChild(listItem);
+        });
+        drawerContainer.appendChild(itemList);
+        return {
+            element: drawerContainer,
+            open: () => drawerContainer.classList.add('open'),
+            close: () => drawerContainer.classList.remove('open')
+        }
+        }
+        
     
     </script>
 </body>
