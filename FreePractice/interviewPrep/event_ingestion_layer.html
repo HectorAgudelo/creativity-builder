@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Ingestion Layer</title>
+  </head>
+  <body>
+    <div id="viewport" style="padding: 10%;">
+      <div class="node" data-node-id="node-1">
+        <span class="node-title">Source Node</span>
+        <button
+          class="port"
+          data-port-id="p-out-1"
+          data-port-type="output"
+        ></button>
+      </div>
+      <div class="node" data-node-id="node-2">
+        <span class="node-title">Target Node</span>
+        <button
+          class="port"
+          data-port-id="p-in-1"
+          data-port-type="input"
+        ></button>
+      </div>
+    </div>
+    <script type="module" src="./dist/attachWorkspaceListener.js"></script>
+  </body>
+</html>
