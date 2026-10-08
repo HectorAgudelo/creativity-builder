@@ -1,3 +1,6 @@
+eggs
+apples
+bread
 apples
 bread
 milk
